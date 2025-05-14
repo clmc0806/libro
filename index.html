@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#3367D6">
+  <title>Cantos Litúrgicos</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <h1>Cantos Litúrgicos</h1>
+
+  <!-- Botón para instalar la app -->
+  <button id="btn-instalar" style="display:none;">📲 Instalar app</button>
+
+  <input type="text" id="search" placeholder="Buscar canto...">
+  
+  <ul id="cantos-list"></ul>
+
+  <div id="canto-detalle"></div>
+
+  <h2>Agregar nuevo canto</h2>
+  <form id="canto-form">
+    <input type="text" id="titulo" placeholder="Título" required><br>
+    <textarea id="letra" placeholder="Letra del canto" required></textarea><br>
+    <button type="submit">Guardar Canto</button>
+  </form>
+
+  <!-- Tu script principal -->
+  <script src="app.js"></script>
+
+  <!-- Registro del Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(reg => console.log("✅ Service Worker registrado:", reg))
+        .catch(err => console.log("❌ Error al registrar Service Worker:", err));
+    }
+  </script>
+
+  <!-- Lógica del botón para instalar la app -->
+  <script>
+    let deferredPrompt;
+    const btnInstalar = document.getElementById('btn-instalar');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      btnInstalar.style.display = 'inline-block';
+
+      btnInstalar.addEventListener('click', () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('✅ El usuario aceptó la instalación');
+          } else {
+            console.log('❌ El usuario canceló la instalación');
+          }
+          deferredPrompt = null;
+          btnInstalar.style.display = 'none';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

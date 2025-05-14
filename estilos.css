@@ -1,0 +1,30 @@
+body {
+  font-family: sans-serif;
+  margin: 20px;
+  background: #f8f8f8;
+}
+
+input, textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+#cantos-list {
+  list-style: none;
+  padding: 0;
+}
+
+#cantos-list li {
+  padding: 10px;
+  background: #fff;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+#canto-detalle {
+  margin-top: 20px;
+  background: #eef;
+  padding: 10px;
+}
